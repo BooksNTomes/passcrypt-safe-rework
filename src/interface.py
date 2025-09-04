@@ -4,9 +4,13 @@ import src.initialize_database as initdb
 from src.classes import User, Account
 from typing import List
 
+from maskpass import askpass
+
 ## INTERFACE ##
 # Consists of the outer frontend layer and the backend layer beneath it
 # TODO : Frontend in TUI is difficult to separate from the backend due to logic, but separation would be beneficial
+
+DEBUG = 0
 
 ## Backend Layer
 def register_user(name : str, password : str, reentered_password : str) -> bool:
@@ -24,12 +28,15 @@ def authenticate_user(name : str, password : str) -> bool:
     try:
         # Load User
         salt = store.get_user_by_name(name)[-1]
-        print(salt)
+        if (DEBUG):
+            print(salt)
 
         hash = crypt.verify_hash(password, salt)
-        print(hash)
+        if (DEBUG):
+            print(hash)
         stored = store.get_user_by_name(name)[2]
-        print(stored)
+        if (DEBUG):
+            print(stored)
 
         if hash == stored:
             return True
@@ -67,7 +74,7 @@ def frontend():
             # Login
             print()
             name = input("Login> Enter Username> ")
-            password = input("Login> Enter Password> ")
+            password = askpass("Login> Enter Password> ")
             print()
             # Authenticate
             if authenticate_user(name, password):
@@ -167,13 +174,13 @@ def frontend():
                     if (cmd.lower() == 'ed'):
                         # Authenticate
                         print()
-                        old_password = input("Authenticate> Enter Password> ")
+                        old_password = askpass("Authenticate> Enter Password> ")
                         print()
                         if authenticate_user(user.name, old_password):
                             # Edit Proper
                             print()
                             print("Leave blank if no modification")
-                            new_password = input("Edit Password> Enter New Password> ")
+                            new_password = askpass("Edit Password> Enter New Password> ")
                             print(new_password)
 
                             # Update Credentials
@@ -202,7 +209,7 @@ def frontend():
                                 store.update_user("password", new_password, user.user_id)
                                 store.update_user("salt", new_salt, user.user_id)
                                 # Logging Out Message
-                                input("User Credentials Changed, Logging Out> ")
+                                print("User Credentials Changed, Logging Out> ")
                                 break
                             else:
                                 print("Credentials Unchanged")
@@ -227,8 +234,8 @@ def frontend():
             # Register
             print()
             name = input("Register> Enter Username> ")
-            password = input("Register> Enter Password> ")
-            reentered_password = input("Register> Reenter Password> ")
+            password = askpass("Register> Enter Password> ")
+            reentered_password = askpass("Register> Reenter Password> ")
             print()
             # Create User
             if register_user(name, password, reentered_password):
