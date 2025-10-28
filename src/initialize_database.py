@@ -1,8 +1,9 @@
 import sqlite3
 import os
+from dotenv import dotenv_values
 
 # Environment Variables
-STORAGE_FILE = "storage.db" 
+STORAGE_FILE = f"{dotenv_values(".env")["STORAGE_FILE"]}" 
 RESET = False
 
 ## TABLE INITIALIZATION ##

@@ -1,5 +1,5 @@
-DEVTODOS.md
 __pycache__
-storage.db
-archive
+.env
+gitignore
 fork-passcrypt-safe-rework.code-workspace
+storage.db

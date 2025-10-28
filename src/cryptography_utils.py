@@ -3,9 +3,10 @@ from cryptography.fernet import Fernet
 import bcrypt
 import hashlib
 import base64
+from dotenv import dotenv_values
 
-# INSECURE : Change When Personalizing System
-NOT_SALT = b'$2b$12$bbFRQG5/7p7N/VZVcd.RhO'
+# Salt from .env file
+SALT : bytes = f"{dotenv_values(".env")["SALT"]}".encode("utf-8")
 
 ## HASH ##
 def hash(password : str, include_salt : bool = True):
@@ -33,7 +34,7 @@ def no_salt_hash(text):
     # encode
     bytes = text.encode('utf-8')
     # hash
-    hashed = bcrypt.hashpw(bytes, NOT_SALT)
+    hashed = bcrypt.hashpw(bytes, SALT)
     return hashed.decode()
 ## SALTLESS HASH END ##
 

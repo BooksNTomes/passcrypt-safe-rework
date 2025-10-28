@@ -1,0 +1,5 @@
+-- Remove this line and add your salt / other configurations (like storage file location) to this file --
+-- A sample salt is given, but do change it --
+
+SALT=b'$2b$12$bbFRQG5/7p7N/VZVcd.RhO'
+STORAGE_FILE=storage.db
