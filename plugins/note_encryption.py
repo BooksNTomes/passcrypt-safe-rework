@@ -5,7 +5,7 @@ import os
 ## TODO : experiment using credential,credential as parameters (make a singular parameter key_derivation function at crypt)
 
 ## Backend Layer
-def generate_key(with_credential : bool = False, credential : str = None):
+def generate_key(with_credential : bool = False, credential : str = None): # type: ignore
     if with_credential:
         return crypt.derive_key_alternative(credential, credential)
     else:
@@ -36,13 +36,13 @@ def note_encryption():
                 if credential == '' or credential == None:
                     print("No Credential Given")
                     continue
-                key, salt = generate_key(credential)
-                print(f"Generated Key: {key.decode()}")
-                print(f"Generated Salt: {salt.decode()}")
+                key, salt = generate_key(credential) # type: ignore
+                print(f"Generated Key: {key.decode()}") # type: ignore
+                print(f"Generated Salt: {salt.decode()}") # type: ignore
                 print("Remember Your Credential and Salt")
             else:
                 key = generate_key()
-                print(f"Generated Key: {key.decode()}")
+                print(f"Generated Key: {key.decode()}") # type: ignore
                 print("Remember Your Key")
             continue
 
@@ -51,7 +51,7 @@ def note_encryption():
             credential = input("Input your Credential> ").encode()
             salt = input("Input your Salt> ").encode()
             key = retrieve_key(credential, salt)
-            print(f"Key: {key.decode()}")
+            print(f"Key: {key.decode()}") # type: ignore
             continue
 
         if cmd.upper() == "EN":

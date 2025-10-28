@@ -24,7 +24,7 @@ def verify_hash(password : str, salt : str):
     # encode
     bytes = password.encode('utf-8')
     # hash
-    hashed = bcrypt.hashpw(bytes, salt)
+    hashed = bcrypt.hashpw(bytes, salt) # type: ignore
     return hashed.decode()
 ## VERIFY HASH END ##
 
