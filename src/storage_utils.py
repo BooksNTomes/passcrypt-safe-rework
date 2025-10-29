@@ -1,7 +1,8 @@
 import sqlite3
+from dotenv import dotenv_values
 
 # Environment Variables
-STORAGE_FILE = "storage.db" 
+STORAGE_FILE = f"{dotenv_values(".env")["STORAGE_FILE"]}" 
 
 # Storage Format
 ## - SQLite Database, where entities are returned as lists
